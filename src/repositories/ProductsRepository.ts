@@ -1,8 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { IProductsCreate, IReturnProductsCreate } from '../interfaces/products.interface';
 import { IProductsMethods } from '../interfaces/methods.interface';
-
-const prisma = new PrismaClient();
+import { prisma } from '../BD/prisma.config';
 
 class ProductsRepository implements IProductsMethods {
   async createProducts(data: IProductsCreate): Promise<IReturnProductsCreate> {
