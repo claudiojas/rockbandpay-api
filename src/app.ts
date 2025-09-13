@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from "fastify"
 import { fastifyCors }  from "@fastify/cors";
-import { getOrders } from "./routers/GETmethods";
+import { productRoutes } from "./routers/ProductRoutes";
 
 
 
@@ -29,6 +29,6 @@ export class App {
             methods: ['POST', 'DELETE', 'GET', 'PUT', 'PATCH']
         });
 
-        this.app.register(getOrders);
+        this.app.register(productRoutes);
     }
 }
