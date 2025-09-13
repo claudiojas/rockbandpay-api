@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Tabela de Pulseiras (Wristbands)
+model Wristband {
+  id        String   @id @default(cuid())
+  code      String   @unique // ID numérico único da pulseira
+  qrCode    String   @unique // QR code da pulseira
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  orders    Order[]
+  payments  Payment[]
+
+  @@map("wristbands")
+}
+
+// Tabela de Categorias de Produtos
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  products Product[]
+
+  @@map("categories")
+}
+
+// Tabela de Produtos
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  categoryId  String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  category   Category   @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+// Tabela de Pedidos
+model Order {
+  id          String   @id @default(cuid())
+  wristbandId String
+  status      OrderStatus @default(PENDING)
+  totalAmount Decimal  @db.Decimal(10, 2) @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  wristband   Wristband @relation(fields: [wristbandId], references: [id])
+  orderItems  OrderItem[]
+  payments    Payment[]
+
+  @@map("orders")
+}
+
+// Tabela de Itens do Pedido
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+
+  // Relacionamentos
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+// Tabela de Pagamentos
+model Payment {
+  id          String        @id @default(cuid())
+  wristbandId String
+  orderId     String?       // Pode ser null se for pagamento direto
+  amount      Decimal       @db.Decimal(10, 2)
+  method      PaymentMethod
+  status      PaymentStatus @default(PENDING)
+  pixCode     String?       // Código PIX se aplicável
+  stripeId    String?       // ID do Stripe se aplicável
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relacionamentos
+  wristband Wristband @relation(fields: [wristbandId], references: [id])
+  order    Order?    @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+// Enums
+enum OrderStatus {
+  PENDING    // Pedido pendente
+  CONFIRMED  // Pedido confirmado
+  PREPARING  // Em preparação
+  READY      // Pronto para entrega
+  DELIVERED  // Entregue
+  CANCELLED  // Cancelado
+}
+
+enum PaymentMethod {
+  PIX       // Pagamento PIX
+  CREDIT    // Cartão de crédito
+  DEBIT     // Cartão de débito
+  CASH      // Dinheiro
+  TRANSFER  // Transferência bancária
+}
+
+enum PaymentStatus {
+  PENDING   // Pagamento pendente
+  PROCESSING // Processando
+  COMPLETED // Concluído
+  FAILED    // Falhou
+  REFUNDED  // Reembolsado
+}
