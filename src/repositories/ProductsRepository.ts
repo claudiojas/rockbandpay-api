@@ -4,7 +4,7 @@ import { IProductsMethods } from '../interfaces/methods.interface';
 import { prisma } from '../BD/prisma.config';
 
 class ProductsRepository implements IProductsMethods {
-  async createProducts(data: IProductsCreate): Promise<IReturnProductsCreate> {
+  async createProduct(data: IProductsCreate): Promise<IReturnProductsCreate> {
     const product = await prisma.product.create({
       data: {
         name: data.name,
@@ -38,6 +38,15 @@ class ProductsRepository implements IProductsMethods {
       where: { id },
     });
     return product;
+  }
+
+  async getProductsByCategoryId(id: string): Promise<IReturnProductsCreate[] | null> {
+    const products = await prisma.product.findMany({
+        where: {
+            categoryId: id,
+        },
+    });
+    return products;
   }
 }
 

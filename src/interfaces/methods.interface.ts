@@ -4,16 +4,17 @@ import { ICreateWristband, IWristband } from "./wristband.interface";
 
 
 export interface IProductsMethods {
-    createProducts(data: IProductsCreate): Promise<IReturnProductsCreate>
+    createProduct(data: IProductsCreate): Promise<IReturnProductsCreate>
     getProducts(): Promise<IReturnProductsCreate[]>;
     updateProduct(id: string, data: Partial<IProductsCreate>): Promise<IReturnProductsCreate>;
     findProductById(id: string): Promise<IReturnProductsCreate | null>;
+    getProductsByCategoryId(id: string): Promise<IReturnProductsCreate[] | null>;
 }
 
 export interface ICategoryMethods {
-    creteCategory(data: ICreateCategory): Promise<ICategory>
+    createCategory(data: ICreateCategory): Promise<ICategory>
 }
 
 export interface IWristbandMethods {
-    creteCategory(data: ICreateWristband): Promise<IWristband>
+    createWristband(data: ICreateWristband): Promise<IWristband>
 }

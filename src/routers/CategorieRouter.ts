@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { ICreateCategory } from "../interfaces/categorie.interface";
 import CategorieUseCases from "../usecases/CategorieUseCases";
+import ProductUseCases from "../usecases/ProductUseCases";
 
 export async function categorieRoutes(app: FastifyInstance) {
 
@@ -23,6 +24,20 @@ export async function categorieRoutes(app: FastifyInstance) {
                 error: "Invalid data for category creation."
             });
         }
-    })
+    });
+
+    app.get<{ Params: { id: string } }>('/categories/:id/products', async (request, reply) => {
+        const { id } = request.params;
+        try {
+            const products = await ProductUseCases.getProductsByCategoryId(id);
+            return reply.status(200).send(products);
+        } catch (error) {
+            console.error(`Error fetching products for category ${id}:`, error);
+            return reply.status(500).send({
+                success: false,
+                error: "Unable to search for products."
+            });
+        }
+    });
 
 };

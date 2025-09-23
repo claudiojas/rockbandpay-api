@@ -14,7 +14,7 @@ const productUpdateSchema = productCreateSchema.partial();
 class ProductUseCases {
   async createProduct(data: IProductsCreate) {
     const validatedData = productCreateSchema.parse(data);
-    return ProductsRepository.createProducts(validatedData);
+    return ProductsRepository.createProduct(validatedData);
   }
 
   async getProducts() {
@@ -29,6 +29,10 @@ class ProductUseCases {
 
     const validatedData = productUpdateSchema.parse(data);
     return ProductsRepository.updateProduct(id, validatedData);
+  }
+
+  async getProductsByCategoryId(id: string) {
+    return ProductsRepository.getProductsByCategoryId(id);
   }
 }
 
