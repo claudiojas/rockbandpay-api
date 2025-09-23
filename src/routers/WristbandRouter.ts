@@ -1,27 +1,35 @@
 import { FastifyInstance } from "fastify";
-import { ICreateWristband } from "../interfaces/wristband.interface";
+import { z } from "zod";
 import WristbandUseCases from "../usecases/WristbandUseCases";
 
-export async function  wristbandRoutes (app: FastifyInstance) {
-    app.post<{ Body: ICreateWristband }>('/wristband', async (request, reply) => {
+export async function wristbandRoutes(app: FastifyInstance) {
+
+    app.post('/wristbands', async (request, reply) => {
+        const createWristbandSchema = z.object({
+            code: z.string(),
+            qrCode: z.string(),
+        });
         try {
-            const wristband = await WristbandUseCases.createWristband(request.body)
+            const { code, qrCode } = createWristbandSchema.parse(request.body);
+            const wristband = await WristbandUseCases.createWristband({ code, qrCode });
             return reply.status(201).send(wristband);
-            
         } catch (error) {
             console.error("Error creating wristband:", error);
-            return reply.status(400).send({ 
+            return reply.status(400).send({
                 success: false,
-                error: "Invalid data for wristband creation."
+                error: "Invalid data for wristband creation.",
             });
         }
     });
 
-    app.get<{ Params: { code: string } }>('/wristbands/:code', async (request, reply) => {
-        const { code } = request.params;
+    app.get('/wristbands/:code', async (request, reply) => {
+        const getWristbandSchema = z.object({
+            code: z.string()
+        })
+        const { code } = getWristbandSchema.parse(request.params)
         try {
-            const wristband = await WristbandUseCases.findWristbandByCode(code);
-            return reply.status(200).send(wristband);
+            const wristband = await WristbandUseCases.findWristbandByCode(code)
+            return reply.send(wristband)
         } catch (error: any) {
             if (error.message === "Wristband not found") {
                 return reply.status(404).send({
