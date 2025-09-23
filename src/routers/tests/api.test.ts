@@ -82,4 +82,73 @@ describe('API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body.name).toBe(updatedData.name);
   });
+
+  // --- Wristband Tests ---
+
+  it('should be able to create a new wristband', async () => {
+    const wristbandData = { code: 'WRIST-001', qrCode: 'qr-data-001' };
+    const response = await supertest(server.server).post('/wristband').send(wristbandData);
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body.code).toBe('WRIST-001');
+  });
+
+  it('should be able to find a wristband by code', async () => {
+    const wristband = await prisma.wristband.create({
+      data: { code: 'WRIST-002', qrCode: 'qr-data-002' }
+    });
+    const response = await supertest(server.server).get(`/wristbands/${wristband.code}`);
+    expect(response.status).toBe(200);
+    expect(response.body.id).toBe(wristband.id);
+  });
+
+  // --- Order Tests ---
+
+  it('should be able to create a new order for a wristband', async () => {
+    const wristband = await prisma.wristband.create({
+      data: { code: 'WRIST-003', qrCode: 'qr-data-003' }
+    });
+    const response = await supertest(server.server).post('/orders').send({ wristbandId: wristband.id });
+    expect(response.status).toBe(201);
+    expect(response.body.wristbandId).toBe(wristband.id);
+    expect(response.body.status).toBe('PENDING');
+  });
+
+  it('should be able to list orders by wristband', async () => {
+    const wristband = await prisma.wristband.create({
+      data: { code: 'WRIST-004', qrCode: 'qr-data-004' }
+    });
+    const order = await prisma.order.create({
+      data: { wristbandId: wristband.id }
+    });
+    const response = await supertest(server.server).get(`/orders/${wristband.id}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(1);
+    expect(response.body[0].id).toBe(order.id);
+  });
+
+  it('should be able to add an item to an order', async () => {
+    const category = await prisma.category.create({ data: { name: 'Sucos', isActive: true } });
+    const product = await prisma.product.create({
+      data: { name: 'Suco de Abacaxi', price: 9.00, categoryId: category.id }
+    });
+    const wristband = await prisma.wristband.create({
+      data: { code: 'WRIST-005', qrCode: 'qr-data-005' }
+    });
+    const order = await prisma.order.create({
+      data: { wristbandId: wristband.id }
+    });
+
+    const itemData = {
+      productId: product.id,
+      quantity: 2,
+      unitPrice: 9.00, // In a real app, you'd fetch this from the product
+      totalPrice: 18.00
+    };
+
+    const response = await supertest(server.server).post(`/orders/${order.id}/items`).send(itemData);
+    expect(response.status).toBe(201);
+    expect(response.body.productId).toBe(product.id);
+    expect(response.body.quantity).toBe(2);
+  });
 });
