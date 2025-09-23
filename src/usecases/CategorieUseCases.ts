@@ -12,7 +12,7 @@ const categorieCreateSchema = z.object({
 class CategorieUsecases {
     async createCategorie (data: ICreateCategory) {
         const validatedData = categorieCreateSchema.parse(data);
-        return CategorieRepositorie.creteCategory(validatedData);
+        return CategorieRepositorie.createCategory(validatedData);
     }
 };
 
