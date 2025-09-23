@@ -3,7 +3,7 @@ import { IWristbandMethods } from "../interfaces/methods.interface";
 import { ICreateWristband, IWristband } from "../interfaces/wristband.interface";
 
 class WristbandRepositorie implements IWristbandMethods {
-    async creteCategory(data: ICreateWristband): Promise<IWristband> {
+    async createWristband(data: ICreateWristband): Promise<IWristband> {
         const wristband = await prisma.wristband.create({
             data: {
                 code: data.code,
@@ -11,6 +11,15 @@ class WristbandRepositorie implements IWristbandMethods {
             }
         })
         return wristband
+    }
+
+    async findWristbandByCode(code: string): Promise<IWristband | null> {
+        const wristband = await prisma.wristband.findUnique({
+            where: {
+                code,
+            }
+        });
+        return wristband;
     }
 };
 

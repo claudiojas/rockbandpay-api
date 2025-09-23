@@ -3,7 +3,7 @@ import { fastifyCors }  from "@fastify/cors";
 import { productRoutes } from "./routers/ProductRoutes";
 import { categorieRoutes } from "./routers/CategorieRouter";
 import { wristbandRoutes } from "./routers/WristbandRouter";
-
+import { orderRoutes } from "./routers/OrderRoutes";
 
 
 export class App {
@@ -34,5 +34,6 @@ export class App {
         this.app.register(productRoutes);
         this.app.register(categorieRoutes);
         this.app.register(wristbandRoutes);
+        this.app.register(orderRoutes);
     }
 }

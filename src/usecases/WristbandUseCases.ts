@@ -9,12 +9,23 @@ const wristbandCreateSchema = z.object({
 });
 
 
+const codeSchema = z.string().min(1, "Code is required");
+
 class WristbandUseCases {
     async createWristband (data: ICreateWristband) {
 
         const validatedData = wristbandCreateSchema.parse(data);
-        return WristbandRepositorie.creteCategory(validatedData)
+        return WristbandRepositorie.createWristband(validatedData)
 
+    }
+
+    async findWristbandByCode(code: string) {
+        const validatedCode = codeSchema.parse(code);
+        const wristband = await WristbandRepositorie.findWristbandByCode(validatedCode);
+        if (!wristband) {
+            throw new Error("Wristband not found")
+        }
+        return wristband;
     }
 };
 

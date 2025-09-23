@@ -15,5 +15,25 @@ export async function  wristbandRoutes (app: FastifyInstance) {
                 error: "Invalid data for wristband creation."
             });
         }
-    })
+    });
+
+    app.get<{ Params: { code: string } }>('/wristbands/:code', async (request, reply) => {
+        const { code } = request.params;
+        try {
+            const wristband = await WristbandUseCases.findWristbandByCode(code);
+            return reply.status(200).send(wristband);
+        } catch (error: any) {
+            if (error.message === "Wristband not found") {
+                return reply.status(404).send({
+                    success: false,
+                    error: error.message
+                });
+            }
+            console.error(`Error fetching wristband ${code}:`, error);
+            return reply.status(500).send({
+                success: false,
+                error: "Unable to search for wristband."
+            });
+        }
+    });
 }

@@ -1,6 +1,7 @@
 import { ICategory, ICreateCategory } from "./categorie.interface";
 import { IProductsCreate, IReturnProductsCreate } from "./products.interface";
 import { ICreateWristband, IWristband } from "./wristband.interface";
+import { ICreateOrder, IOrder } from "./order.interface";
 
 
 export interface IProductsMethods {
@@ -16,5 +17,10 @@ export interface ICategoryMethods {
 }
 
 export interface IWristbandMethods {
-    createWristband(data: ICreateWristband): Promise<IWristband>
+    createWristband(data: ICreateWristband): Promise<IWristband>;
+    findWristbandByCode(code: string): Promise<IWristband | null>;
+}
+
+export interface IOrderMethods {
+    createOrder(data: ICreateOrder): Promise<IOrder>;
 }

@@ -21,18 +21,19 @@ O objetivo desta fase é ter um ambiente de desenvolvimento funcional e as opera
         *   `POST /products` (para criar um produto)
         *   `GET /products` (para listar todos os produtos)
         *   `PUT /products/:id` (para atualizar um produto)
+        *   `GET /categories/:id/products` (para listar produtos de uma categoria)
     *   **Gerenciamento de Categorias:**
         *   `POST /categorie` (para criar uma categoria)
     *   **Gerenciamento de Pulseiras (Wristbands):**
         *   `POST /wristbands` (para registrar uma nova pulseira)
+        *   `GET /wristbands/:code` (para consultar uma pulseira pelo código)
+    *   **Gerenciamento de Pedidos (Orders):**
+        *   `POST /orders` (para criar um novo pedido associado a uma pulseira)
 
 ### A Fazer
 
 1.  **Implementar as Rotas da API (CRUD):**
-    *   **Gerenciamento de Pulseiras (Wristbands):**
-        *   `GET /wristbands/:code` (para consultar uma pulseira pelo código)
     *   **Gerenciamento de Pedidos (Orders):**
-        *   `POST /orders` (para criar um novo pedido associado a uma pulseira)
         *   `GET /orders/:wristbandId` (para ver o consumo de uma pulseira)
         *   `POST /orders/:orderId/items` (para adicionar itens a um pedido)
 
