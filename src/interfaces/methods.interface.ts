@@ -2,6 +2,7 @@ import { ICategory, ICreateCategory } from "./categorie.interface";
 import { IProductsCreate, IReturnProductsCreate } from "./products.interface";
 import { ICreateWristband, IWristband } from "./wristband.interface";
 import { ICreateOrder, IOrder } from "./order.interface";
+import { ICreateOrderItem, IOrderItem } from "./order-item.interface";
 
 
 export interface IProductsMethods {
@@ -23,4 +24,6 @@ export interface IWristbandMethods {
 
 export interface IOrderMethods {
     createOrder(data: ICreateOrder): Promise<IOrder>;
+    findOrdersByWristbandId(wristbandId: string): Promise<IOrder[] | null>;
+    addOrderItem(orderId: string, data: ICreateOrderItem): Promise<IOrderItem>;
 }

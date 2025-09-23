@@ -29,11 +29,6 @@ O objetivo desta fase é ter um ambiente de desenvolvimento funcional e as opera
         *   `GET /wristbands/:code` (para consultar uma pulseira pelo código)
     *   **Gerenciamento de Pedidos (Orders):**
         *   `POST /orders` (para criar um novo pedido associado a uma pulseira)
-
-### A Fazer
-
-1.  **Implementar as Rotas da API (CRUD):**
-    *   **Gerenciamento de Pedidos (Orders):**
         *   `GET /orders/:wristbandId` (para ver o consumo de uma pulseira)
         *   `POST /orders/:orderId/items` (para adicionar itens a um pedido)
 
