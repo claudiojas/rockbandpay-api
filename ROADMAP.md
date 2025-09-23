@@ -32,6 +32,10 @@ O objetivo desta fase é ter um ambiente de desenvolvimento funcional e as opera
         *   `GET /orders/:wristbandId` (para ver o consumo de uma pulseira)
         *   `POST /orders/:orderId/items` (para adicionar itens a um pedido)
 
+4.  **Garantia de Qualidade e Documentação:**
+    *   Criação de suíte de testes automatizados para todas as rotas da API da Fase 1.
+    *   Criação do arquivo `README.md` com a documentação completa do projeto.
+
 ---
 
 ## Fase 2: Desenvolvimento do Frontend
