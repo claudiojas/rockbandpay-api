@@ -1,5 +1,6 @@
 import { ICategory, ICreateCategory } from "./categorie.interface";
 import { IProductsCreate, IReturnProductsCreate } from "./products.interface";
+import { ICreateWristband, IWristband } from "./wristband.interface";
 
 
 export interface IProductsMethods {
@@ -11,4 +12,8 @@ export interface IProductsMethods {
 
 export interface ICategoryMethods {
     creteCategory(data: ICreateCategory): Promise<ICategory>
+}
+
+export interface IWristbandMethods {
+    creteCategory(data: ICreateWristband): Promise<IWristband>
 }

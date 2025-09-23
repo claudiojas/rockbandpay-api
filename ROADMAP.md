@@ -6,19 +6,27 @@
 
 O objetivo desta fase é ter um ambiente de desenvolvimento funcional e as operações básicas do banco de dados prontas.
 
+### Concluído
+
 1.  **Configurar o Banco de Dados:**
-    *   Instalar o PostgreSQL (se ainda não estiver instalado).
-    *   Criar um banco de dados para a aplicação.
-    *   Atualizar o arquivo `.env` com a URL de conexão do seu banco de dados (`DATABASE_URL`).
+    *   Instalação do PostgreSQL.
+    *   Criação do banco de dados da aplicação.
+    *   Configuração da `DATABASE_URL` no arquivo `.env`.
 
 2.  **Aplicar o Schema no Banco:**
-    *   Executar o comando `npx prisma migrate dev --name init` no diretório `backend` para criar as tabelas no banco de dados com base no `schema.prisma`.
+    *   Execução do comando `npx prisma migrate dev` para criar as tabelas iniciais.
 
-3.  **Implementar as Rotas da API (CRUD):**
+3.  **Implementação de Rotas da API:**
     *   **Gerenciamento de Produtos:**
         *   `POST /products` (para criar um produto)
         *   `GET /products` (para listar todos os produtos)
         *   `PUT /products/:id` (para atualizar um produto)
+    *   **Gerenciamento de Categorias:**
+        *   `POST /categorie` (para criar uma categoria)
+
+### A Fazer
+
+1.  **Implementar as Rotas da API (CRUD):**
     *   **Gerenciamento de Pulseiras (Wristbands):**
         *   `POST /wristbands` (para registrar uma nova pulseira)
         *   `GET /wristbands/:code` (para consultar uma pulseira pelo código)

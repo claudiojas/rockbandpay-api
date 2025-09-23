@@ -13,11 +13,10 @@ export async function categorieRoutes(app: FastifyInstance) {
         } catch (error) {
             console.error("Error creating product:", error);
             return reply.status(400).send({ 
-            success: false,
-            error: "Invalid data for product creation."
+                success: false,
+                error: "Invalid data for product creation."
             });
         }
-
     })
 
 };
