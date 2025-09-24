@@ -21,6 +21,11 @@ class WristbandRepositorie implements IWristbandMethods {
         });
         return wristband;
     }
+
+    async getAllWristbands(): Promise<IWristband[]> {
+        const wristbands = await prisma.wristband.findMany();
+        return wristbands;
+    }
 };
 
 

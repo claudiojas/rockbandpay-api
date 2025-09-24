@@ -26,6 +26,11 @@ export async function categorieRoutes(app: FastifyInstance) {
         }
     });
 
+    app.get('/categories', async (_, reply) =>{
+        const categories = await CategorieUseCases.getCategories();
+        return await reply.status(200).send(categories);
+    })
+
     app.get<{ Params: { id: string } }>('/categories/:id/products', async (request, reply) => {
         const { id } = request.params;
         try {

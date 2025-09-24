@@ -13,6 +13,10 @@ class CategorieRepositorie implements ICategoryMethods {
 
         return categorie;
     }
+
+    async getCategory(): Promise<ICategory[]> {
+        return await prisma.category.findMany();
+    }
 };
 
 

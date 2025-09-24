@@ -15,11 +15,13 @@ export interface IProductsMethods {
 
 export interface ICategoryMethods {
     createCategory(data: ICreateCategory): Promise<ICategory>
+    getCategory(): Promise<ICategory[]>
 }
 
 export interface IWristbandMethods {
     createWristband(data: ICreateWristband): Promise<IWristband>;
     findWristbandByCode(code: string): Promise<IWristband | null>;
+    getAllWristbands(): Promise<IWristband[]>;
 }
 
 export interface IOrderMethods {

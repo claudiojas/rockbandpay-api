@@ -27,6 +27,10 @@ class WristbandUseCases {
         }
         return wristband;
     }
+
+    async getAllWristbands() {
+        return WristbandRepositorie.getAllWristbands();
+    }
 };
 
 

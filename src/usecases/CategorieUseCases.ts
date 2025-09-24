@@ -13,6 +13,10 @@ class CategorieUsecases {
     async createCategorie (data: ICreateCategory) {
         const validatedData = categorieCreateSchema.parse(data);
         return CategorieRepositorie.createCategory(validatedData);
+    };
+
+    async getCategories () {
+        return CategorieRepositorie.getCategory();
     }
 };
 

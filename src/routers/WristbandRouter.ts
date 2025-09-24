@@ -44,4 +44,17 @@ export async function wristbandRoutes(app: FastifyInstance) {
             });
         }
     });
+
+    app.get('/wristbands', async (request, reply) => {
+        try {
+            const wristbands = await WristbandUseCases.getAllWristbands();
+            return reply.send(wristbands);
+        } catch (error) {
+            console.error("Error fetching all wristbands:", error);
+            return reply.status(500).send({
+                success: false,
+                error: "Unable to fetch all wristbands."
+            });
+        }
+    });
 }
