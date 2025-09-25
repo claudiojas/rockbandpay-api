@@ -144,7 +144,7 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
 
 #### Registrar uma nova pulseira
 *   **Método:** `POST`
-*   **Endpoint:** `/wristband`
+*   **Endpoint:** `/wristbands`
 *   **Corpo (Body):**
     ```json
     {
@@ -154,7 +154,7 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
     ```
 *   **Exemplo com cURL:**
     ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"code": "ROCK-12345", "qrCode": "some-qr-code-data-12345"}' http://localhost:3000/wristband
+    curl -X POST -H "Content-Type: application/json" -d '{"code": "ROCK-12345", "qrCode": "some-qr-code-data-12345"}' http://localhost:3000/wristbands
     ```
 
 #### Consultar pulseira por código
@@ -173,12 +173,13 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
 *   **Corpo (Body):**
     ```json
     {
-      "wristbandId": "cmfwth0000003pgrl3qpmrstb"
+      "wristbandId": "cmfwth0000003pgrl3qpmrstb",
+      "orderValue": 50.00
     }
     ```
 *   **Exemplo com cURL:**
     ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"wristbandId": "..."}' http://localhost:3000/orders
+    curl -X POST -H "Content-Type: application/json" -d '{"wristbandId": "...", "orderValue": 50.00}' http://localhost:3000/orders
     ```
 
 #### Adicionar item a um pedido

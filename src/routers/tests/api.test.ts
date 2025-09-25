@@ -87,7 +87,7 @@ describe('API Routes', () => {
 
   it('should be able to create a new wristband', async () => {
     const wristbandData = { code: 'WRIST-001', qrCode: 'qr-data-001' };
-    const response = await supertest(server.server).post('/wristband').send(wristbandData);
+    const response = await supertest(server.server).post('/wristbands').send(wristbandData);
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('id');
     expect(response.body.code).toBe('WRIST-001');
@@ -108,7 +108,7 @@ describe('API Routes', () => {
     const wristband = await prisma.wristband.create({
       data: { code: 'WRIST-003', qrCode: 'qr-data-003' }
     });
-    const response = await supertest(server.server).post('/orders').send({ wristbandId: wristband.id });
+    const response = await supertest(server.server).post('/orders').send({ wristbandId: wristband.id, orderValue: 50.00 });
     expect(response.status).toBe(201);
     expect(response.body.wristbandId).toBe(wristband.id);
     expect(response.body.status).toBe('PENDING');

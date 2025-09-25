@@ -6,7 +6,7 @@ import { ICreateOrderItem, IOrderItem } from "../interfaces/order-item.interface
 const orderCreateSchema = z.object({
     wristbandId: z.string().min(1, "Wristband ID is required"),
     status: z.enum(["PENDING", "CONFIRMED", "PREPARING", "READY", "DELIVERED", "CANCELLED"]).optional(),
-    totalAmount: z.number().optional().default(0)
+    orderValue: z.number().positive("Order value must be a positive number")
 });
 
 const orderItemDataSchema = z.object({

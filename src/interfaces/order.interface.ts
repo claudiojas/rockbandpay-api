@@ -4,7 +4,7 @@ import { OrderStatus } from "@prisma/client";
 export interface ICreateOrder {
     wristbandId: string,
     status?: OrderStatus,
-    totalAmount?: number
+    orderValue: number
 }
 
 export interface IOrder {

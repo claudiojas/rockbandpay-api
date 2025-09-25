@@ -9,7 +9,7 @@ class OrderRepository implements IOrderMethods {
             data: {
                 wristbandId: data.wristbandId,
                 status: data.status,
-                totalAmount: data.totalAmount
+                totalAmount: data.orderValue
             }
         });
         return order;
