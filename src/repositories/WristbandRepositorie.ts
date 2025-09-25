@@ -17,7 +17,18 @@ class WristbandRepositorie implements IWristbandMethods {
         const wristband = await prisma.wristband.findUnique({
             where: {
                 code,
-            }
+            },
+            include: {
+                orders: {
+                    include: {
+                        orderItems: {
+                            include: {
+                                product: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         return wristband;
     }

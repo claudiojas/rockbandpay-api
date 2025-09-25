@@ -28,7 +28,8 @@ export async function wristbandRoutes(app: FastifyInstance) {
         })
         const { code } = getWristbandSchema.parse(request.params)
         try {
-            const wristband = await WristbandUseCases.findWristbandByCode(code)
+            const wristband = await WristbandUseCases.findWristbandByCode(code);
+
             return reply.send(wristband)
         } catch (error: any) {
             if (error.message === "Wristband not found") {
